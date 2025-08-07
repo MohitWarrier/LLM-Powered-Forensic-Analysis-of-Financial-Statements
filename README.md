@@ -37,12 +37,6 @@ Financial statements often hide warning signs that require detailed forensic ana
 - LLM-driven explanation generation with error handling.  
 - Downloadable sample CSV file to guide input formatting.
 
-## Target Users
-
-- Finance students and freshers learning forensic accounting and AI applications.  
-- Individual investors seeking deeper financial statement insights.  
-- Data scientists and developers interested in applying LLMs to financial analysis.
-
 ## Getting Started
 
 - Run the app locally with Streamlit:  streamlit run app.py
