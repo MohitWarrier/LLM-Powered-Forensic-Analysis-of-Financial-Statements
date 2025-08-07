@@ -1,45 +1,61 @@
 # LLM-Powered Forensic Analysis of Financial Statements
 
-This project applies large language models (LLMs) and forensic accounting principles to detect red flags in public company financials. It combines traditional quantitative checks with natural language analysis of company disclosures to identify signs of earnings manipulation, weak financial health, or misleading narratives.
+This project uses large language models (LLMs) combined with financial forensic accounting techniques to analyze company financials for potential red flags. It provides quantitative checks on key financial metrics and delivers AI-powered explanations to help interpret the results.
 
-## Project Goals
+## Project Overview
 
-- Identify financial red flags using well-established forensic metrics such as:
+- Users can upload company financial data (CSV or Excel) or use embedded sample data.
+- The app runs several forensic checks on the latest financial year (and some tests using multi-year data), including:
   - Cash Conversion Ratio
   - Yield on Cash
-  - ROCE/ROIC
-  - Interest Coverage Ratio
-  - Growth in receivables or inventory relative to sales
-  - Contingent liabilities relative to net worth
-
-- Analyze the language used in annual reports (e.g., MD&A sections, footnotes) to spot vague, evasive, or overly optimistic phrasing often associated with accounting irregularities.
-
-- Provide clear, structured summaries of each company’s financial health and any concerns identified.
+  - Contingent Liabilities to Net Worth ratio
+  - Debt-to-Equity Ratio
+  - Year-over-Year Revenue Growth Rate
+- Results highlight flagged metrics with explanations of potential risks.
+- An integrated LLM (via Groq client) generates natural language summaries and insights based on the analysis.
+- Interactive Streamlit web interface provides data upload, validation, visualization, and analysis.
 
 ## Why This Matters
 
-Companies frequently present a cleaner picture than reality through aggressive accounting or selective disclosure. Most investors either don’t have time to do deep forensic work or aren’t trained to spot these patterns. This tool helps bridge that gap.
-
-The goal isn’t just to process data — it’s to extract insight: what’s really going on with a business, and whether the reported numbers can be trusted.
+Financial statements often hide warning signs that require detailed forensic analysis. This tool helps users quickly identify such red flags and provides expert-like AI insights, making complex financial data more accessible and understandable.
 
 ## How It Works
 
-1. **Data extraction**: Financial statements and notes are collected from public filings.
-2. **Quantitative analysis**: A rules engine checks for known red flags using key ratios and trends.
-3. **LLM-based review**: A language model reads key sections of the reports, identifies risky language, and provides context or explanation.
-4. **Output**: The findings are combined into a summary report for each company.
+1. **Data Input**: Upload your financial data in a structured CSV or Excel file, or use the provided sample data.  
+2. **Data Validation**: Checks for required financial metrics and displays clear error/warning messages if inputs are incomplete or malformed.  
+3. **Financial Forensic Checks**: Runs multiple quantitative red flag analyses on the most recent data (and trends where applicable).  
+4. **Trend Visualization**: Shows simple multi-year trends for key financial metrics.  
+5. **AI-Powered Explanation**: Upon user request, generates an AI-based narrative explaining the flagged results.  
+6. **Results Summary**: Visual indicators of risk levels and a detailed explanation output.
 
-## Target Audience
+## Current Features
 
-This project is intended for:
-- Individual investors who want to go beyond surface-level metrics
-- Analysts looking for a faster way to screen companies for risk
-- Developers interested in applied LLM use cases in finance
+- Upload CSV or Excel files with financial metrics as rows and years as columns.  
+- Robust validation with user guidance and formatted error messages.  
+- Five key forensic financial red flags calculated.  
+- Multi-year financial trend visualization using Plotly.  
+- LLM-driven explanation generation with error handling.  
+- Downloadable sample CSV file to guide input formatting.
 
-## Current Status
+## Target Users
 
-Active development. Planned features include:
-- Parsing PDFs and 10-Ks directly
-- Interactive web interface
-- Support for batch screening of multiple companies
-- Risk scoring system based on combined quant and language outputs
+- Finance students and freshers learning forensic accounting and AI applications.  
+- Individual investors seeking deeper financial statement insights.  
+- Data scientists and developers interested in applying LLMs to financial analysis.
+
+## Getting Started
+
+- Run the app locally with Streamlit:  streamlit run app.py
+- Upload your financial statements or use the sample data.  
+- Explore analysis results, risk scores, and AI-generated explanations.  
+- Use the downloadable sample CSV file to format your own data correctly.
+
+## Planned Next Steps
+
+- Add additional financial checks (e.g., working capital changes, expense pattern irregularities).  
+- Integrate automated financial data ingestion via APIs like yfinance.  
+- Improve user experience with more flexible input handling and improved error messaging.  
+- Prepare the app for deployment and sharing through public hosting.
+
+---
+
