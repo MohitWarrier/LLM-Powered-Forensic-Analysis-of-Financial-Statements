@@ -1,74 +1,73 @@
 # PortfolioLab
 
-Portfolio optimization and financial analysis toolkit. Built with Python + Streamlit.
+PortfolioLab is a work‑in‑progress playground for portfolio optimization, basic quant experiments, and some AI‑assisted financial analysis. Built with Python + Streamlit.
 
 ## What it does
 
-- **Portfolio Optimizer** — Mean-variance (Markowitz) optimization with efficient frontier, plus Equal Weight and Risk Parity strategies. Supports weight constraints, backtesting, and CSV export.
-- **AI Quant Analyst** — Chat with an AI about your portfolio. It calls real compute functions (not just vibes) to answer questions about risk, strategy comparison, correlations, and backtests.
-- **Forensic Analysis** — Upload financial statements and detect red flags (cash conversion, debt-to-equity, revenue growth anomalies, etc.) with LLM-powered explanations.
+- **Portfolio optimizer**
+  - Mean–variance (Markowitz) optimization
+  - Equal‑weight and simple risk‑parity style allocations
+  - Efficient frontier plots, weight charts, and basic backtests
 
-## Quick start
+- **AI quant helper**
+  - Chat interface that can call real Python functions (risk, correlations, strategy comparisons, simple backtests)
+  - Uses Groq + LLM models under the hood for the AI parts
+
+- **Forensic-ish analysis**
+  - Upload financial statements (CSV/Excel style)
+  - Runs rule‑based and ML checks for:
+    - Cash conversion issues
+    - Leverage / debt ratios
+    - Growth anomalies
+  - LLM explains the red flags in plain language
+
+A lot of this is still rough and subject to change.
+
+## Project status
+
+- **Status:** Work in progress / prototype  
+- **Good for:** experimenting with ideas, hacking on features, trying LLM + tools patterns  
+- **Not ready for:** production, real-money decision making, or stable public APIs
+
+
+## Getting started
+
+### 1. Clone the repo
 
 ```bash
-# Clone and setup
-git clone https://github.com/YOUR_USERNAME/LLM-Powered-Forensic-Analysis-of-Financial-Statements.git
+git clone https://github.com/MohitWarrier/LLM-Powered-Forensic-Analysis-of-Financial-Statements.git
 cd LLM-Powered-Forensic-Analysis-of-Financial-Statements
+```
 
-# Create virtual environment
-python -m venv vevn
-vevn\Scripts\activate        # Windows
-# source vevn/bin/activate   # Mac/Linux
+### 2. Create and Activate a virtual environment
+```bash
+python -m venv venv
 
-# Install dependencies
+# Windows
+venv\Scripts\activate
+
+# macOS / Linux
+# source venv/bin/activate
+```
+
+### 3. Install Dependencies
+```bash
 pip install -r requirements.txt
+```
 
-# Add your Groq API key (needed for AI features)
-# Create a .env file in the root directory:
-echo OPENAI_API_KEY=your_groq_api_key_here > .env
+### 4. Configure Groq API Key
+The portfolio optimizer works without any API keys.
+The AI quant helper and forensic explanations need an LLM.
 
-# Run
+Create a .env file in the project root:
+```bash
+# .env
+GROQ_API_KEY=your_groq_api_key_here
+```
+Make sure the variable name matches what the code expects (for example GROQ_API_KEY or OPENAI_API_KEY if you wired it that way).
+
+### 5. Run the App
+```bash
 streamlit run app.py
 ```
 
-Get a free Groq API key at [console.groq.com](https://console.groq.com). The portfolio optimizer works without it — only the AI Quant Analyst and forensic LLM explanations need the key.
-
-## Data sources
-
-- **Sample data** — Built-in synthetic data, works out of the box
-- **Live market data** — Real prices from Yahoo Finance. Just type in any ticker symbols
-
-## Project structure
-
-```
-app.py                          # Entry point
-config.py                       # Settings and feature flags
-src/
-  core/                         # Types, interfaces, feature registry
-  data/                         # Data providers (dummy, CSV, yfinance)
-  features/
-    portfolio/                  # Optimizer (Markowitz, risk parity, backtest)
-    quant_analyst/              # AI chat with LLM tool-use
-    forensic/                   # Financial red flag detection
-  llm/                          # Groq/LLM client and prompt formatting
-  ui/                           # Shared layout and components
-```
-
-Each feature is a self-contained module with its own service layer and UI. You can enable/disable any feature in `config.py`.
-
-## Tech stack
-
-- Python, Streamlit, Plotly
-- scipy (optimization), scikit-learn, numpy, pandas
-- yfinance (market data)
-- Groq API with Llama 3.3 (LLM features)
-
-## Adding features
-
-The codebase uses a feature registry pattern. To add a new feature:
-
-1. Create a new folder in `src/features/your_feature/`
-2. Add `service.py` (inherits `BaseService`) and `page.py` (Streamlit renderer)
-3. Register it in `app.py`'s `build_registry()` and add a flag in `config.py`
-
-That's it. The sidebar and routing handle themselves.
