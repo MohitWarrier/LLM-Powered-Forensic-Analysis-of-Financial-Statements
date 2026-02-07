@@ -1,55 +1,74 @@
-# LLM-Powered Forensic Analysis of Financial Statements
+# PortfolioLab
 
-This project uses large language models (LLMs) combined with financial forensic accounting techniques to analyze company financials for potential red flags. It provides quantitative checks on key financial metrics and delivers AI-powered explanations to help interpret the results.
+Portfolio optimization and financial analysis toolkit. Built with Python + Streamlit.
 
-## Project Overview
+## What it does
 
-- Users can upload company financial data (CSV or Excel) or use embedded sample data.
-- The app runs several forensic checks on the latest financial year (and some tests using multi-year data), including:
-  - Cash Conversion Ratio
-  - Yield on Cash
-  - Contingent Liabilities to Net Worth ratio
-  - Debt-to-Equity Ratio
-  - Year-over-Year Revenue Growth Rate
-- Results highlight flagged metrics with explanations of potential risks.
-- An integrated LLM (via Groq client) generates natural language summaries and insights based on the analysis.
-- Interactive Streamlit web interface provides data upload, validation, visualization, and analysis.
+- **Portfolio Optimizer** — Mean-variance (Markowitz) optimization with efficient frontier, plus Equal Weight and Risk Parity strategies. Supports weight constraints, backtesting, and CSV export.
+- **AI Quant Analyst** — Chat with an AI about your portfolio. It calls real compute functions (not just vibes) to answer questions about risk, strategy comparison, correlations, and backtests.
+- **Forensic Analysis** — Upload financial statements and detect red flags (cash conversion, debt-to-equity, revenue growth anomalies, etc.) with LLM-powered explanations.
 
-## Why This Matters
+## Quick start
 
-Financial statements often hide warning signs that require detailed forensic analysis. This tool helps users quickly identify such red flags and provides expert-like AI insights, making complex financial data more accessible and understandable.
+```bash
+# Clone and setup
+git clone https://github.com/YOUR_USERNAME/LLM-Powered-Forensic-Analysis-of-Financial-Statements.git
+cd LLM-Powered-Forensic-Analysis-of-Financial-Statements
 
-## How It Works
+# Create virtual environment
+python -m venv vevn
+vevn\Scripts\activate        # Windows
+# source vevn/bin/activate   # Mac/Linux
 
-1. **Data Input**: Upload your financial data in a structured CSV or Excel file, or use the provided sample data.  
-2. **Data Validation**: Checks for required financial metrics and displays clear error/warning messages if inputs are incomplete or malformed.  
-3. **Financial Forensic Checks**: Runs multiple quantitative red flag analyses on the most recent data (and trends where applicable).  
-4. **Trend Visualization**: Shows simple multi-year trends for key financial metrics.  
-5. **AI-Powered Explanation**: Upon user request, generates an AI-based narrative explaining the flagged results.  
-6. **Results Summary**: Visual indicators of risk levels and a detailed explanation output.
+# Install dependencies
+pip install -r requirements.txt
 
-## Current Features
+# Add your Groq API key (needed for AI features)
+# Create a .env file in the root directory:
+echo OPENAI_API_KEY=your_groq_api_key_here > .env
 
-- Upload CSV or Excel files with financial metrics as rows and years as columns.  
-- Robust validation with user guidance and formatted error messages.  
-- Five key forensic financial red flags calculated.  
-- Multi-year financial trend visualization using Plotly.  
-- LLM-driven explanation generation with error handling.  
-- Downloadable sample CSV file to guide input formatting.
+# Run
+streamlit run app.py
+```
 
-## Getting Started
+Get a free Groq API key at [console.groq.com](https://console.groq.com). The portfolio optimizer works without it — only the AI Quant Analyst and forensic LLM explanations need the key.
 
-- Run the app locally with Streamlit:  streamlit run app.py
-- Upload your financial statements or use the sample data.  
-- Explore analysis results, risk scores, and AI-generated explanations.  
-- Use the downloadable sample CSV file to format your own data correctly.
+## Data sources
 
-## Planned Next Steps
+- **Sample data** — Built-in synthetic data, works out of the box
+- **Live market data** — Real prices from Yahoo Finance. Just type in any ticker symbols
 
-- Add additional financial checks (e.g., working capital changes, expense pattern irregularities).  
-- Integrate automated financial data ingestion via APIs like yfinance.  
-- Improve user experience with more flexible input handling and improved error messaging.  
-- Prepare the app for deployment and sharing through public hosting.
+## Project structure
 
----
+```
+app.py                          # Entry point
+config.py                       # Settings and feature flags
+src/
+  core/                         # Types, interfaces, feature registry
+  data/                         # Data providers (dummy, CSV, yfinance)
+  features/
+    portfolio/                  # Optimizer (Markowitz, risk parity, backtest)
+    quant_analyst/              # AI chat with LLM tool-use
+    forensic/                   # Financial red flag detection
+  llm/                          # Groq/LLM client and prompt formatting
+  ui/                           # Shared layout and components
+```
 
+Each feature is a self-contained module with its own service layer and UI. You can enable/disable any feature in `config.py`.
+
+## Tech stack
+
+- Python, Streamlit, Plotly
+- scipy (optimization), scikit-learn, numpy, pandas
+- yfinance (market data)
+- Groq API with Llama 3.3 (LLM features)
+
+## Adding features
+
+The codebase uses a feature registry pattern. To add a new feature:
+
+1. Create a new folder in `src/features/your_feature/`
+2. Add `service.py` (inherits `BaseService`) and `page.py` (Streamlit renderer)
+3. Register it in `app.py`'s `build_registry()` and add a flag in `config.py`
+
+That's it. The sidebar and routing handle themselves.

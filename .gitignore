@@ -5,7 +5,11 @@ __pycache__/
 
 # Virtual environment folders
 venv/
+vevn/
 env/
+
+# Windows artifacts
+nul
 
 # Environment variables
 .env
